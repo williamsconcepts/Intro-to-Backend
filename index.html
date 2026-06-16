@@ -42,7 +42,7 @@
         <div class="tabs">
           <a href="#" class="active">All Tasks</a>
           <a href="#">Active</a>
-          <a href="#">Completed</a>
+          <a href="#">Completed</a>  
         </div>
 
         <div class="sort">
@@ -68,6 +68,7 @@
         </thead>
 
         <tbody>
+            
         </tbody>
       </table>
 
@@ -81,7 +82,7 @@
 
 <!-- 
 =====================================
-============ DOM Manipulation =======
+============ DOM Rendering =======
 =====================================
 -->
 
@@ -108,19 +109,19 @@ function createItems() {
         task: task,
         list: "work",
         dueDate: "2026-04-03",
-        created: new Date(),
+        created: new Date().toLocaleDateString(),
         starred: false
     });
 
     // clearing out the input element and wait for next
     taskInput.value = "";
 
-    // rending the items in the array and rendering the DOM
-    renderItems();
+    // rending the items in the array on the DOM
+    loadItems();
 }
 
 // Loading Items
-function renderItems() {
+function loadItems() {
     // clears the todo table element to recieve a fresh set of tr children element
     todoTable.innerHTML = "";
 
@@ -171,18 +172,28 @@ function renderItems() {
 
 function deleteItems(index) {
   todos.splice(index, 1);
-  renderItems();
+  loadItems();
 }
 
 
 function editItems(index) {
+    // opens prompt with current task value
   const updateTask = prompt(
         "Edit task", todos[index].task
     );
+
+    // if you entered an empty value, do nothing
+    if (updateTask.trim() === "") {
+        return;
+    }
+
+    // else replace old task value
   todos[index].task = updateTask.trim();
-  renderItems()
+
+  loadItems()
 }
 
+loadItems()
     </script>
   </body>
 </html>
